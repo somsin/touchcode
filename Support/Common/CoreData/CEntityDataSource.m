@@ -41,6 +41,7 @@ return(self);
 
 - (void)dealloc
 {
+	self.managedObjectContext = nil;
 self.sortDescriptors = NULL;
 self.entityDescription = NULL;
 self.predicate = NULL;
