@@ -41,6 +41,7 @@ return(self);
 
 - (void)dealloc
 {
+self.sortDescriptors = NULL;
 self.entityDescription = NULL;
 self.predicate = NULL;
 self.items = NULL;
