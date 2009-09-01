@@ -76,6 +76,11 @@ if ((self = [super init]) != NULL)
 return(self);
 }
 
+- (NSString *)storePathForName:(NSString *)inName pathExtension:(NSString *)inPathExtension 
+{
+return [[self applicationSupportFolder] stringByAppendingPathComponent:[inName stringByAppendingPathExtension:inPathExtension]];
+}
+
 - (id)initWithName:(NSString *)inName forceReplace:(BOOL)inForceReplace storeType:(NSString *)inStoreType storeOptions:(NSDictionary *)inStoreOptions;
 {
 NSString *theModelPath = [[NSBundle mainBundle] pathForResource:inName ofType:@"mom"];
@@ -89,7 +94,7 @@ if ([inStoreType isEqualToString:NSSQLiteStoreType])
 else if ([inStoreType isEqualToString:NSBinaryStoreType])
 	thePathExtension = @"db";
 
-NSString *theStorePath = [[self applicationSupportFolder] stringByAppendingPathComponent:[inName stringByAppendingPathExtension:thePathExtension]];
+NSString *theStorePath = [self storePathForName:inName pathExtension:thePathExtension];
 
 if (inForceReplace == YES)
 	{
