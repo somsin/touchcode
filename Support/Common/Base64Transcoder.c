@@ -117,7 +117,11 @@ size_t theDecodedDataSize = (int)ceil(inDataSize / 4.0) * 3;
 return(theDecodedDataSize);
 }
 
-bool Base64EncodeData(const void *inInputData, size_t inInputDataSize, char *outOutputData, size_t *ioOutputDataSize)
+bool Base64EncodeData(const void *inInputData, size_t inInputDataSize, char *outOutputData, size_t *ioOutputDataSize) {
+	return Base64EncodeDataWithLineBreaks(inInputData, inInputDataSize, outOutputData, ioOutputDataSize, true);
+}
+
+bool Base64EncodeDataWithLineBreaks(const void *inInputData, size_t inInputDataSize, char *outOutputData, size_t *ioOutputDataSize, bool insertLineBreaks)
 {
 size_t theEncodedDataSize = EstimateBas64EncodedDataSize(inInputDataSize);
 if (*ioOutputDataSize < theEncodedDataSize)
@@ -131,7 +135,7 @@ for (; theInIndex < (inInputDataSize / 3) * 3; theInIndex += 3)
 	outOutputData[theOutIndex++] = kBase64EncodeTable[(theInPtr[theInIndex] & kBits_00000011) << 4 | (theInPtr[theInIndex + 1] & kBits_11110000) >> 4];
 	outOutputData[theOutIndex++] = kBase64EncodeTable[(theInPtr[theInIndex + 1] & kBits_00001111) << 2 | (theInPtr[theInIndex + 2] & kBits_11000000) >> 6];
 	outOutputData[theOutIndex++] = kBase64EncodeTable[(theInPtr[theInIndex + 2] & kBits_00111111) >> 0];
-	if (theOutIndex % 74 == 72)
+	if (theOutIndex % 74 == 72 && insertLineBreaks)
 		{
 		outOutputData[theOutIndex++] = '\r';
 		outOutputData[theOutIndex++] = '\n';
@@ -150,13 +154,13 @@ if (theRemainingBytes == 1)
 		outOutputData[theOutIndex] = '\n';
 		}
 	}
-else if (theRemainingBytes == 2)
+else if (theRemainingBytes == 2 && insertLineBreaks)
 	{
 	outOutputData[theOutIndex++] = kBase64EncodeTable[(theInPtr[theInIndex] & kBits_11111100) >> 2];
 	outOutputData[theOutIndex++] = kBase64EncodeTable[(theInPtr[theInIndex] & kBits_00000011) << 4 | (theInPtr[theInIndex + 1] & kBits_11110000) >> 4];
 	outOutputData[theOutIndex++] = kBase64EncodeTable[(theInPtr[theInIndex + 1] & kBits_00001111) << 2 | (0 & kBits_11000000) >> 6];
 	outOutputData[theOutIndex++] = '=';
-	if (theOutIndex % 74 == 72)
+	if (theOutIndex % 74 == 72 && insertLineBreaks)
 		{
 		outOutputData[theOutIndex++] = '\r';
 		outOutputData[theOutIndex] = '\n';
