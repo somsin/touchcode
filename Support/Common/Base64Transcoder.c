@@ -103,10 +103,14 @@ const u_int8_t kBits_11000000 = 0xC0;
 const u_int8_t kBits_11110000 = 0xF0;
 const u_int8_t kBits_11111100 = 0xFC;
 
-size_t EstimateBas64EncodedDataSize(size_t inDataSize)
+size_t EstimateBas64EncodedDataSize(size_t inDataSize) {
+	return EstimateBas64EncodedDataSizeWithLineBreaks(inDataSize, true);
+}
+
+size_t EstimateBas64EncodedDataSizeWithLineBreaks(size_t inDataSize, bool inInsertLineBreaks)
 {
 size_t theEncodedDataSize = (int)ceil(inDataSize / 3.0) * 4;
-theEncodedDataSize = theEncodedDataSize / 72 * 74 + theEncodedDataSize % 72;
+if (inInsertLineBreaks) theEncodedDataSize = theEncodedDataSize / 72 * 74 + theEncodedDataSize % 72;
 return(theEncodedDataSize);
 }
 
@@ -123,7 +127,7 @@ bool Base64EncodeData(const void *inInputData, size_t inInputDataSize, char *out
 
 bool Base64EncodeDataWithLineBreaks(const void *inInputData, size_t inInputDataSize, char *outOutputData, size_t *ioOutputDataSize, bool insertLineBreaks)
 {
-size_t theEncodedDataSize = EstimateBas64EncodedDataSize(inInputDataSize);
+size_t theEncodedDataSize = EstimateBas64EncodedDataSizeWithLineBreaks(inInputDataSize, insertLineBreaks);
 if (*ioOutputDataSize < theEncodedDataSize)
 	return(false);
 *ioOutputDataSize = theEncodedDataSize;
@@ -154,7 +158,7 @@ if (theRemainingBytes == 1)
 		outOutputData[theOutIndex] = '\n';
 		}
 	}
-else if (theRemainingBytes == 2 && insertLineBreaks)
+else if (theRemainingBytes == 2)
 	{
 	outOutputData[theOutIndex++] = kBase64EncodeTable[(theInPtr[theInIndex] & kBits_11111100) >> 2];
 	outOutputData[theOutIndex++] = kBase64EncodeTable[(theInPtr[theInIndex] & kBits_00000011) << 4 | (theInPtr[theInIndex + 1] & kBits_11110000) >> 4];

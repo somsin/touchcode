@@ -31,6 +31,8 @@
 #include <stdbool.h>
 
 extern size_t EstimateBas64EncodedDataSize(size_t inDataSize);
+size_t EstimateBas64EncodedDataSizeWithLineBreaks(size_t inDataSize, bool inInsertLineBreaks);
+
 extern size_t EstimateBas64DecodedDataSize(size_t inDataSize);
 
 extern bool Base64EncodeData(const void *inInputData, size_t inInputDataSize, char *outOutputData, size_t *ioOutputDataSize);
