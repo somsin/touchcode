@@ -41,7 +41,6 @@
 @property (readwrite, retain) NSString *storeType;
 @property (readwrite, retain) NSDictionary *storeOptions;
 
-- (NSString *)applicationSupportFolder;
 - (NSString *)threadStorageKey;
 @end
 

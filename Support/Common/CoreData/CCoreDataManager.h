@@ -59,5 +59,7 @@
 - (BOOL)save:(NSError **)outError;
 - (void)save;
 
+- (NSString *)applicationSupportFolder;
+
 
 @end
