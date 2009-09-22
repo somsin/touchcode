@@ -116,9 +116,26 @@ NSDateComponents *theTodayComponents = [[NSCalendar currentCalendar] components:
 if ([theDateComponents isEqual:theTodayComponents])
 	{
 	if (self.singleLine == YES)
-		return(@"Today");
+		{
+		if (self.relative == YES)
+			{
+			int hours = (int) round([theNow timeIntervalSinceDate:inDate] / (60 * 60));
+			if (hours > 1)
+				return [NSString stringWithFormat:@"%d hours ago", hours];
+			else if (hours > 0)
+				return @"1 hour ago";
+			else
+				return @"Just now";
+			}
+		else
+			{
+			return(@"Today");
+			}
+		}
 	else
+		{
 		return([NSString stringWithFormat:@"Today\n%@", [gSubDateFormatter1 stringFromDate:inDate]]);
+		}
 	}
 
 // #############################################################################
