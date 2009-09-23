@@ -49,18 +49,10 @@
 		destRect.size.width = ceilf(self.size.width * (inSize.height / self.size.height));
 	}
 	
-    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-    CGContextRef ctx = CGBitmapContextCreate(NULL, destRect.size.width, destRect.size.height, 8, (4 * destRect.size.width), colorSpace, kCGImageAlphaPremultipliedFirst);
-    CGColorSpaceRelease(colorSpace);
-	
-    CGContextSetInterpolationQuality(ctx, kCGInterpolationHigh);
-    CGContextDrawImage(ctx, destRect, self.CGImage);
-	
-    CGImageRef resizedImage = CGBitmapContextCreateImage(ctx);
-    CGContextRelease(ctx);
-    
-    UIImage *result = [UIImage imageWithCGImage:resizedImage];
-    CGImageRelease(resizedImage);
+	UIGraphicsBeginImageContext(destRect.size);
+	[self drawInRect:destRect];
+	UIImage *result = UIGraphicsGetImageFromCurrentImageContext();
+	UIGraphicsEndImageContext();
     
     return result;
 }
