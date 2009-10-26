@@ -40,10 +40,10 @@
 //#import <TouchSQL/NSDate_SqlExtension.h>
 //#import <TouchSQL/NSDictionary_SqlExtensions.h>
 //#import <TouchSQL/NSString_SqlExtensions.h>
-#import "CObjectTranscoder.h"
-#import "CPersistentObject.h"
-#import "CPersistentObjectManager.h"
-#import "CRandomAccessTemporaryTable.h"
+//#import "CObjectTranscoder.h"
+//#import "CPersistentObject.h"
+//#import "CPersistentObjectManager.h"
+//#import "CRandomAccessTemporaryTable.h"
 #import "CSqliteDatabase_Deprecated.h"
 #import "CSqliteDatabase_Extensions.h"
 #import "CSqliteDatabase.h"
