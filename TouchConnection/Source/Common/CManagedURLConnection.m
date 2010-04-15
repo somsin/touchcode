@@ -129,9 +129,11 @@ if (self.connection)
 #pragma mark -
 
 - (NSURLRequest *)connection:(NSURLConnection *)inConnection willSendRequest:(NSURLRequest *)inRequest redirectResponse:(NSURLResponse *)inResponse
-{
-return(inRequest);
-}
+	{
+//	NSLog(@"Connection: %@\nRequest: %@\nRequest URL: %@\nRedirectResponse: %@", connection, [inRequest allHTTPHeaderFields], [inRequest URL], [inResponse URL]);
+//	NSLog(@"BINGO");
+	return(inRequest);
+	}
 
 - (void)connection:(NSURLConnection *)inConnection didReceiveResponse:(NSURLResponse *)inResponse
 {
@@ -139,6 +141,7 @@ if (self.connection == NULL)
 	{
 	return;
 	}
+//NSLog(@"Response: %@", [inResponse allHeaderFields]);
 NSAssert(self.connection == inConnection, NULL);
 
 self.response = inResponse;
@@ -150,6 +153,7 @@ if (self.connection == NULL)
 	{
 	return;
 	}
+//NSLog(@"DATA: %@", inData);
 NSAssert(self.connection == inConnection, NULL);
 
 if (self.data == NULL)
@@ -179,6 +183,7 @@ else
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)inConnection
 {
+//NSLog(@"FINISHED");
 if (self.connection == NULL)
 	{
 	return;
@@ -194,6 +199,7 @@ self.connection = NULL;
 
 - (void)connection:(NSURLConnection *)inConnection didFailWithError:(NSError *)inError
 {
+//NSLog(@"ERROR: %@", inError);
 if (self.connection == NULL)
 	{
 	return;
