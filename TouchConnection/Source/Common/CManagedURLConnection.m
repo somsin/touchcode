@@ -114,12 +114,12 @@ if (self.connection)
 
 - (void)connection:(NSURLConnection *)connection didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge
 {
-	if ([challenge previousFailureCount] > 1)
-		{
-		[[challenge sender] cancelAuthenticationChallenge:challenge];
-		}
-	
-	[[challenge sender] useCredential:self.credential forAuthenticationChallenge:challenge];
+if ([challenge previousFailureCount] > 1)
+	{
+	[[challenge sender] cancelAuthenticationChallenge:challenge];
+	}
+
+[[challenge sender] useCredential:self.credential forAuthenticationChallenge:challenge];
 }
 
 - (void)connection:(NSURLConnection *)connection didCancelAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge
@@ -130,8 +130,6 @@ if (self.connection)
 
 - (NSURLRequest *)connection:(NSURLConnection *)inConnection willSendRequest:(NSURLRequest *)inRequest redirectResponse:(NSURLResponse *)inResponse
 	{
-//	NSLog(@"Connection: %@\nRequest: %@\nRequest URL: %@\nRedirectResponse: %@", connection, [inRequest allHTTPHeaderFields], [inRequest URL], [inResponse URL]);
-//	NSLog(@"BINGO");
 	return(inRequest);
 	}
 
@@ -141,7 +139,6 @@ if (self.connection == NULL)
 	{
 	return;
 	}
-//NSLog(@"Response: %@", [inResponse allHeaderFields]);
 NSAssert(self.connection == inConnection, NULL);
 
 self.response = inResponse;
@@ -153,7 +150,6 @@ if (self.connection == NULL)
 	{
 	return;
 	}
-//NSLog(@"DATA: %@", inData);
 NSAssert(self.connection == inConnection, NULL);
 
 if (self.data == NULL)
@@ -183,7 +179,6 @@ else
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)inConnection
 {
-//NSLog(@"FINISHED");
 if (self.connection == NULL)
 	{
 	return;
